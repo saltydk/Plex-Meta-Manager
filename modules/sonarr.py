@@ -39,7 +39,7 @@ class Sonarr:
         try:
             self.api = SonarrAPI(self.url, self.token, session=self.config.session)
             self.api.respect_list_exclusions_when_adding()
-            self.api._validate_add_options(params["root_folder_path"], params["quality_profile"], params["language_profile"])
+            self.api._validate_add_options(params["root_folder_path"], params["quality_profile"])
             self.profiles = self.api.quality_profile()
         except ArrException as e:
             raise Failed(e)
@@ -49,8 +49,6 @@ class Sonarr:
         self.root_folder_path = params["root_folder_path"]
         self.monitor = params["monitor"]
         self.quality_profile = params["quality_profile"]
-        self.language_profile_id = None
-        self.language_profile = params["language_profile"]
         self.series_type = params["series_type"]
         self.season_folder = params["season_folder"]
         self.tag = params["tag"]
@@ -77,8 +75,6 @@ class Sonarr:
         folder = options["folder"] if "folder" in options else self.root_folder_path
         monitor = monitor_translation[options["monitor"] if "monitor" in options else self.monitor]
         quality_profile = options["quality"] if "quality" in options else self.quality_profile
-        language_profile = options["language"] if "language" in options else self.language_profile
-        language_profile = language_profile if self.api._raw.v3 else 1
         series_type = options["series"] if "series" in options else self.series_type
         season = options["season"] if "season" in options else self.season_folder
         tags = options["tag"] if "tag" in options else self.tag
@@ -107,7 +103,7 @@ class Sonarr:
 
         def mass_add():
             try:
-                _a, _e, _i = self.api.add_multiple_series(shows, folder, quality_profile, language_profile, monitor,
+                _a, _e, _i = self.api.add_multiple_series(shows, folder, quality_profile, monitor,
                                                           season, search, cutoff_search, series_type, tags, per_request=100)
                 added.extend(_a)
                 exists.extend(_e)

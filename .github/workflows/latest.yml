@@ -37,30 +37,3 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/plex-meta-manager:latest
-
-      - name: Discord Success Notification
-        uses: meisnate12/discord-notifications@master
-        if: success()
-        with:
-          webhook_id: ${{ secrets.BUILD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.BUILD_WEBHOOK_TOKEN }}
-          title: "latest build: **Success**"
-          url: https://github.com/meisnate12/Plex-Meta-Manager/actions/runs/${{ github.run_id }}
-          username: Metabot
-          avatar_url: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/.github/pmm.png
-          author: Docker
-          author_icon_url: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/.github/docker.png
-
-      - name: Discord Failure Notification
-        uses: meisnate12/discord-notifications@master
-        if: failure()
-        with:
-          webhook_id: ${{ secrets.BUILD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.BUILD_WEBHOOK_TOKEN }}
-          title: "latest build: **Failure**"
-          color: 0xe30c43
-          url: https://github.com/meisnate12/Plex-Meta-Manager/actions/runs/${{ github.run_id }}
-          username: Metabot
-          avatar_url: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/.github/pmm.png
-          author: Docker
-          author_icon_url: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/.github/docker.png

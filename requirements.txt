@@ -1,6 +1,5 @@
 PlexAPI==4.12.1
 tmdbapis==1.0.6
-requests
 git+https://github.com/saltydk/ArrAPI.git
 lxml==4.9.1
 requests==2.28.1
